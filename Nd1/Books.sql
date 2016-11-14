@@ -1,15 +1,15 @@
-INSERT INTO `Authors` (`authorId`, `name`) VALUES (NULL, 'Jonas Biliûnas'), (NULL, 'Balys Sruoga'), (NULL, 'Vincas Kudirka');
+INSERT INTO `Authors` (`authorId`, `name`) VALUES (NULL, 'Jonas BiliÃ»nas'), (NULL, 'Balys Sruoga'), (NULL, 'Vincas Kudirka');
 
-INSERT INTO `Books` (`bookId`, `authorId`, `title`, `year`) VALUES (NULL, '8', 'Liûdna pasaka', '1906'), (NULL, '9', 'Dievø miðkas', '1957'), (NULL, '10', 'Tautiðka giesmë', '1898');
+INSERT INTO `Books` (`bookId`, `authorId`, `title`, `year`) VALUES (NULL, '8', 'LiÃ»dna pasaka', '1906'), (NULL, '9', 'DievÃ¸ miÃ°kas', '1957'), (NULL, '10', 'TautiÃ°ka giesmÃ«', '1898');
 
 SELECT Authors.name, Books.title, Books.year
 FROM Books
 INNER JOIN Authors
-ON Books.authorId=Authors.authorId; 
+ON Books.authorId=Authors.authorId;
 
 UPDATE Books
 SET authorId='2'
-WHERE bookId='9'; 
+WHERE bookId='9';
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS CountAuthorsBooks$$
@@ -38,7 +38,7 @@ BEGIN
  WHILE @i <= @authorsCount DO
    SET @authorsBooks =( SELECT COUNT(*) FROM Books WHERE authorId=@i);
    IF @authorsBooks > 0 THEN
-   SELECT @authorsBooks, Authors.name FROM Authors WHERE Authors.authorId=@i;  
+   SELECT @authorsBooks, Authors.name FROM Authors WHERE Authors.authorId=@i;
    END IF;
    SET @i = @i + 1;
  END WHILE;
@@ -60,7 +60,7 @@ BEGIN
  SET @booksCount = ( SELECT COUNT(*) FROM Books );
  SET @i = 1;
  WHILE @i <= @booksCount DO
-   SET @ifHaveAuthor =( SELECT COUNT(*) FROM Authors WHERE Authors.authorId=@i);   
+   SET @ifHaveAuthor =( SELECT COUNT(*) FROM Authors WHERE Authors.authorId=@i);
    IF !(@ifHaveAuthor > 0) THEN
    DELETE FROM Books WHERE Books.authorId=@i;
    END IF;
@@ -82,7 +82,14 @@ UPDATE `Books` SET `genre` = 'Coding' WHERE `Books`.`bookId` = 3;
 UPDATE `Books` SET `genre` = 'Coding' WHERE `Books`.`bookId` = 4;
 UPDATE `Books` SET `genre` = 'Coding' WHERE `Books`.`bookId` = 5;
 
-ALTER TABLE `Books` CHANGE `authorId` `authorId` VARCHAR(255) NULL DEFAULT NULL;
+CREATE TABLE `BooksWithAuthors` ( `id` INT NOT NULL AUTO_INCREMENT , `bookId` INT NOT NULL , `authorId` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+INSERT INTO `BooksWithAuthors` (`id`, `bookId`, `authorId`) VALUES (NULL, '1', '1'), (NULL, '2', '2'), (NULL, '2', '3'), (NULL, '3', '4'), (NULL, '4', '6'), (NULL, '4', '5'), (NULL, '5', '7'), (NULL, '9', '2');
+
+SELECT Books.title, GROUP_CONCAT(Authors.name) FROM Books
+INNER JOIN BooksWithAuthors ON Books.bookId = BooksWithAuthors.bookId
+INNER JOIN Authors ON  Authors.authorId=BooksWithAuthors.authorId
+GROUP BY Books.title;
 
 ALTER TABLE `Books` CHANGE `title` `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
 

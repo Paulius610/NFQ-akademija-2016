@@ -1,6 +1,6 @@
 INSERT INTO `Authors` (`authorId`, `name`) VALUES (NULL, 'Jonas Biliûnas'), (NULL, 'Balys Sruoga'), (NULL, 'Vincas Kudirka');
 
-INSERT INTO `Books` (`bookId`, `authorId`, `title`, `year`) VALUES (NULL, '8', 'Liûdna pasaka', '1906'), (NULL, '9', 'Dievø miðkas', '1957'), (NULL, '10', 'Tautiðka giesmë', '1898');
+INSERT INTO `Books` (`bookId`, `authorId`, `title`, `year`) VALUES (NULL, '8', 'Liûdna pasaka', '1906'), (NULL, '9', 'Dievø miðkas', '1957'), (NULL, '10', 'Tautiðka giesmë', '1901');
 
 SELECT Authors.name, Books.title, Books.year
 FROM Books

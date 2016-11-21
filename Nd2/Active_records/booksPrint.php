@@ -1,6 +1,6 @@
 <?php
 
-namespace nd2\Active_records;
+namespace Nd2\Active_records;
 
 use Nd2\Active_records\Book;
 
